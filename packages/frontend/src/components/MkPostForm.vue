@@ -100,6 +100,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<button v-tooltip="i18n.ts.useCw" class="_button" :class="[$style.footerButton, { [$style.footerButtonActive]: useCw }]" @click="useCw = !useCw"><i class="ti ti-eye-off"></i></button>
 			<button v-tooltip="i18n.ts.hashtags" class="_button" :class="[$style.footerButton, { [$style.footerButtonActive]: withHashtags }]" @click="withHashtags = !withHashtags"><i class="ti ti-hash"></i></button>
 			<button v-tooltip="i18n.ts.mention" class="_button" :class="$style.footerButton" @click="insertMention"><i class="ti ti-at"></i></button>
+			<button v-if="isXConnected" v-tooltip="'Xにも投稿'" class="_button" :class="[$style.footerButton, { [$style.footerButtonActive]: postToX }]" @click="postToX = !postToX"><i class="ti ti-brand-x"></i></button>
 			<button v-if="showAddMfmFunction" v-tooltip="i18n.ts.addMfmFunction" :class="['_button', $style.footerButton]" @click="insertMfmFunction"><i class="ti ti-palette"></i></button>
 			<button v-if="postFormActions.length > 0" v-tooltip="i18n.ts.plugins" class="_button" :class="$style.footerButton" @click="showActions"><i class="ti ti-plug"></i></button>
 		</div>
@@ -231,6 +232,10 @@ const uploader = useUploader({
 	multiple: true,
 });
 
+// 状態管理
+const isXConnected = ref(false);
+const postToX = ref(false);
+
 onUnmounted(() => {
 	uploader.dispose();
 });
@@ -293,6 +298,10 @@ const textLength = computed((): number => {
 });
 
 const maxTextLength = computed((): number => {
+	// Xへのポストの時は140文字制限にする
+	if (postToX.value) {
+		return 140;
+	}
 	return instance ? instance.maxNoteTextLength : 1000;
 });
 
@@ -321,6 +330,7 @@ const canPost = computed((): boolean => {
 				) : true
 		) &&
 		(files.value.length <= 16) &&
+		(xfilecheck()) &&
 		(!poll.value || poll.value.choices.length >= 2);
 });
 
@@ -421,6 +431,29 @@ if (props.specified) {
 if (prefer.s.keepCw && replyTargetNote.value && replyTargetNote.value.cw) {
 	useCw.value = true;
 	cw.value = replyTargetNote.value.cw;
+}
+
+// X同時投稿設定時のチェック
+function xfilecheck() {
+	if (postToX.value) {
+		if (files.value.length + uploader.items.value.length > 4) {
+			return false;
+		}
+		// 指定したファイル種別かどうかチェックする
+		if (files.value.length > 0) {
+			if (files.value.some(file => file.type !== "image/png" && file.type !== "image/jpeg" && file.type !== "image/gif" && file.type !== "image/webp" && file.type !== "video/mp4")) {
+				return false;
+			}
+		}
+		// アップローダーに上げる予定のアイテムもチェック
+		if (uploader.items.value.length > 0) {
+			if (uploader.items.value.some(item => item.file.type !== "image/png" && item.file.type !== "image/jpeg" && item.file.type !== "image/gif" && item.file.type !== "image/webp" && item.file.type !== "video/mp4")) {
+				return false;
+			}
+		}
+		return true;
+	}
+	return true;
 }
 
 function watchForDraft() {
@@ -637,6 +670,7 @@ function showOtherSettings() {
 		component: XTextCounter,
 		props: {
 			textLength: textLength,
+			postToX: postToX,
 		},
 	}, { type: 'divider' }, {
 		icon: reactionAcceptanceIcon,
@@ -1003,6 +1037,7 @@ async function post(ev?: MouseEvent) {
 		visibility: visibility.value,
 		visibleUserIds: visibility.value === 'specified' ? visibleUsers.value.map(u => u.id) : undefined,
 		reactionAcceptance: reactionAcceptance.value,
+		postToX: postToX.value,
 	};
 
 	if (withHashtags.value && hashtags.value && hashtags.value.trim() !== '') {
@@ -1351,7 +1386,7 @@ function showTour() {
 	});
 }
 
-onMounted(() => {
+onMounted(async () => {
 	if (props.autofocus) {
 		focus();
 
@@ -1418,6 +1453,15 @@ onMounted(() => {
 
 		nextTick(() => watchForDraft());
 	});
+
+	try {
+        // バックエンドに連携状態を問い合わせる
+        const res = await misskeyApi('i/x-integration-status');
+        isXConnected.value = res.connected;
+    } catch (e) {
+        console.error('Failed to fetch X status', e);
+    }
+
 });
 
 async function canClose() {

@@ -109,6 +109,14 @@ type Source = {
 	deactivateAntennaThreshold?: number;
 	pidFile: string;
 
+	xIntegration: {
+		appKey: string,
+		appSecret: string,
+		encryptionKey: string;
+		communityKeyword: string;
+		communityid : string;
+	}
+
 	logging?: {
 		sql?: {
 			disableQueryTruncation?: boolean,
@@ -212,6 +220,13 @@ export type Config = {
 	perUserNotificationsMaxCount: number;
 	deactivateAntennaThreshold: number;
 	pidFile: string;
+	xIntegration: {
+		appKey: string,
+		appSecret: string,
+		encryptionKey: string;
+		communityKeyword : string;
+		communityid : string;
+	}
 };
 
 export type FulltextSearchProvider = 'sqlLike' | 'sqlPgroonga' | 'meilisearch';
@@ -327,7 +342,15 @@ export function loadConfig(): Config {
 		perUserNotificationsMaxCount: config.perUserNotificationsMaxCount ?? 500,
 		deactivateAntennaThreshold: config.deactivateAntennaThreshold ?? (1000 * 60 * 60 * 24 * 7),
 		pidFile: config.pidFile,
+		xIntegration: {
+			appKey: config.xIntegration.appKey,
+			appSecret: config.xIntegration.appSecret,
+			encryptionKey: config.xIntegration.encryptionKey,
+			communityKeyword: config.xIntegration.communityKeyword,
+			communityid : config.xIntegration.communityid,
+		},
 		logging: config.logging,
+		
 	};
 }
 

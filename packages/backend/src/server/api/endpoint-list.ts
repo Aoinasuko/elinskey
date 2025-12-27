@@ -442,3 +442,8 @@ export * as 'chat/rooms/invitations/outbox' from './endpoints/chat/rooms/invitat
 export * as 'chat/history' from './endpoints/chat/history.js';
 export * as 'chat/read-all' from './endpoints/chat/read-all.js';
 export * as 'v2/admin/emoji/list' from './endpoints/v2/admin/emoji/list.js';
+
+export * as 'connect/x' from './endpoints/connect/x.js';
+export * as 'connect/x-callback' from './endpoints/connect/x-callback.js';
+export * as 'connect/x-disconnect' from './endpoints/connect/x-disconnect.js';
+export * as 'i/x-integration-status' from './endpoints/i/x-integration-status.js';

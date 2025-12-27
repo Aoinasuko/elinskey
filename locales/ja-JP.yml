@@ -3514,3 +3514,17 @@ _qr:
   scanFile: "端末の画像をスキャン"
   raw: "テキスト"
   mfm: "MFM"
+
+elinskey:
+  integration:
+    settingLabel: "X(旧:Twitter)連携"
+    settingDesc: "X(旧:Twitter)と連携を行い、Xとの同時投稿を行えるようになります。"
+    settingNotConnectedDesc: "技術的な制約により権限設定が広く設定されますが、アプリ内で使用する要素はポストの自動投稿のみです。"
+    settingConnectedDesc: "既にXアカウントと連携済みです。<br>\nノート投稿画面で<i class='ti ti-brand-x'></i>ボタンを押すことで、Xとの同時投稿モードになります。<br>\n<br>\n同時投稿モード中はノートに以下の制限がかかります。<br>\n・入力可能文字数が140文字までになります。<br>\n・ノートに添付可能なファイルがpng、gif、jpeg、WebP、mp4のみになり、同時に4つまでになります。<br>\n<br>\nノートに'#Elin_Share'とハッシュタグをつけることで'#Elin_Share'の文字列を取り除き、XのElinコミュニティに同時投稿します。<br>\n(手順がややこしいですが誤爆防止のため複雑にしています、ご了承ください。)"
+    disconnect: "連携解除"
+    connect: "Xと連携する"
+    selectDisconnect: "X(旧:Twitter)との連携を解除しますか？"
+    disconnectSuccess: "連携を解除しました(Xの連携アプリ設定からえりんすきーの削除をお忘れなく！)"
+    disconnectFail: "解除に失敗しました"
+    connectSuccess: "連携しました！ウィンドウを閉じます..."
+    connectFail: "連携に失敗しました"

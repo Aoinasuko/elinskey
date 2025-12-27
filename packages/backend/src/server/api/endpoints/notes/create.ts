@@ -12,6 +12,11 @@ import { NoteEntityService } from '@/core/entities/NoteEntityService.js';
 import { NoteCreateService } from '@/core/NoteCreateService.js';
 import { IdentifiableError } from '@/misc/identifiable-error.js';
 import { ApiError } from '../../error.js';
+import { DI } from '@/di-symbols.js';
+
+import type {DriveFilesRepository} from '@/models/_.js';
+
+import { XIntegrationService } from '@/core/XIntegrationService.js';
 
 export const meta = {
 	tags: ['notes'],
@@ -182,6 +187,9 @@ export const paramDef = {
 			},
 			required: ['choices'],
 		},
+
+		postToX: { type: 'boolean', default: false },
+
 	},
 	// (re)note with text, files and poll are optional
 	if: {
@@ -218,6 +226,11 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 	constructor(
 		private noteEntityService: NoteEntityService,
 		private noteCreateService: NoteCreateService,
+
+		@Inject(DI.driveFilesRepository)
+		private driveFileRepository: DriveFilesRepository,
+
+		private xIntegrationService: XIntegrationService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
 			try {
@@ -243,9 +256,35 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 					apEmojis: ps.noExtractEmojis ? [] : undefined,
 				});
 
+				if (ps.postToX && me.xAccessToken) {
+
+					// バックグラウンドで実行 (awaitしない)
+					(async () => {
+						try {
+							let files: DriveFilesRepository[] = [];
+
+							// ファイルIDが指定されている場合、DBから情報を取得
+							if (ps.fileIds && ps.fileIds.length > 0) {
+								// TypeORMのメソッドはバージョンによりますが findBy など
+								files = await this.driveFileRepository.findBy({
+									id: In(ps.fileIds)
+								});
+							}
+
+							// X投稿サービスを呼び出し
+							const xtext = ps.text ?? "";
+							await this.xIntegrationService.postTweet(me, xtext, files);
+
+						} catch (err) {
+							console.error('Background X post failed:', err);
+						}
+					})();
+				}
+
 				return {
 					createdNote: await this.noteEntityService.pack(note, me),
 				};
+
 			} catch (err) {
 				// TODO: 他のErrorもここでキャッチしてエラーメッセージを当てるようにしたい
 				if (err instanceof IdentifiableError) {

@@ -285,6 +285,13 @@ export class MiUser {
 	})
 	public token: string | null;
 
+	// Xのアクセストークンとシークレット
+	@Column('varchar', { length: 512, nullable: true })
+	public xAccessToken: string | null;
+
+	@Column('varchar', { length: 512, nullable: true })
+	public xAccessSecret: string | null;
+
 	constructor(data: Partial<MiUser>) {
 		if (data == null) return;
 

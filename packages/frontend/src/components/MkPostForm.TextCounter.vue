@@ -26,9 +26,14 @@ import number from '@/filters/number.js';
 
 const props = defineProps<{
 	textLength: number;
+	postToX: boolean;
 }>();
 
 const maxTextLength = computed(() => {
+	// Xへのポストの時は140文字制限にする
+	if (props.postToX) {
+		return 140;
+	}
 	return instance ? instance.maxNoteTextLength : 1000;
 });
 

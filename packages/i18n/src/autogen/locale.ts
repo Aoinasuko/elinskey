@@ -13124,4 +13124,60 @@ export interface Locale extends ILocale {
          */
         "mfm": string;
     };
+    "elinskey": {
+        "integration": {
+            /**
+             * X(旧:Twitter)連携
+             */
+            "settingLabel": string;
+            /**
+             * X(旧:Twitter)と連携を行い、Xとの同時投稿を行えるようになります。
+             */
+            "settingDesc": string;
+            /**
+             * 技術的な制約により権限設定が広く設定されますが、アプリ内で使用する要素はポストの自動投稿のみです。
+             */
+            "settingNotConnectedDesc": string;
+            /**
+             * 既にXアカウントと連携済みです。<br>
+             * ノート投稿画面で<i class='ti ti-brand-x'></i>ボタンを押すことで、Xとの同時投稿モードになります。<br>
+             * <br>
+             * 同時投稿モード中はノートに以下の制限がかかります。<br>
+             * ・入力可能文字数が140文字までになります。<br>
+             * ・ノートに添付可能なファイルがpng、gif、jpeg、WebP、mp4のみになり、同時に4つまでになります。<br>
+             * <br>
+             * ノートに'#Elin_Share'とハッシュタグをつけることで'#Elin_Share'の文字列を取り除き、XのElinコミュニティに同時投稿します。<br>
+             * (手順がややこしいですが誤爆防止のため複雑にしています、ご了承ください。)
+             */
+            "settingConnectedDesc": string;
+            /**
+             * 連携解除
+             */
+            "disconnect": string;
+            /**
+             * Xと連携する
+             */
+            "connect": string;
+            /**
+             * X(旧:Twitter)との連携を解除しますか？
+             */
+            "selectDisconnect": string;
+            /**
+             * 連携を解除しました(Xの連携アプリ設定からえりんすきーの削除をお忘れなく！)
+             */
+            "disconnectSuccess": string;
+            /**
+             * 解除に失敗しました
+             */
+            "disconnectFail": string;
+            /**
+             * 連携しました！ウィンドウを閉じます...
+             */
+            "connectSuccess": string;
+            /**
+             * 連携に失敗しました
+             */
+            "connectFail": string;
+        };
+    };
 }

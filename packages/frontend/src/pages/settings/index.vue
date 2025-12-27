@@ -156,6 +156,11 @@ const menuDef = computed<SuperMenuDef[]>(() => [{
 		to: '/settings/account-data',
 		active: currentPage.value?.route.name === 'account-data',
 	}, {
+		icon: 'ti ti-brand-x',
+		text: i18n.ts.elinskey.integration.settingLabel,
+		to: '/settings/integration',
+		active: currentPage.value?.route.name === 'integration',
+	}, {
 		icon: 'ti ti-dots',
 		text: i18n.ts.other,
 		to: '/settings/other',

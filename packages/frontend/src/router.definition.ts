@@ -189,6 +189,14 @@ export const ROUTE_DEF = [{
 		name: 'profile',
 		component: page(() => import('@/pages/settings/accounts.vue')),
 	}, {
+		path: '/integration',
+		name: 'integration',
+		component: page(() => import('@/pages/settings/integration.vue')),
+	}, {
+		path: '/integration-callback',
+		name: 'integration-callback',
+		component: page(() => import('@/pages/settings/integration-callback.vue')),
+	}, {
 		path: '/other',
 		name: 'other',
 		component: page(() => import('@/pages/settings/other.vue')),

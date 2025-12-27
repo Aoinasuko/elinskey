@@ -154,6 +154,10 @@ import { ApQuestionService } from './activitypub/models/ApQuestionService.js';
 import { QueueModule } from './QueueModule.js';
 import { QueueService } from './QueueService.js';
 import { LoggerService } from './LoggerService.js';
+
+import { XIntegrationService } from '@/core/XIntegrationService.js';
+import { XCipherService } from '@/core/XCipherService.js';
+
 import type { Provider } from '@nestjs/common';
 
 //#region 文字列ベースでのinjection用(循環参照対応のため)
@@ -303,6 +307,9 @@ const $ApMentionService: Provider = { provide: 'ApMentionService', useExisting: 
 const $ApNoteService: Provider = { provide: 'ApNoteService', useExisting: ApNoteService };
 const $ApPersonService: Provider = { provide: 'ApPersonService', useExisting: ApPersonService };
 const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting: ApQuestionService };
+
+const $XIntegrationService: Provider = { provide: 'XIntegrationService', useExisting: XIntegrationService };
+const $XCipherService: Provider = { provide: 'XCipherService', useExisting: XCipherService };
 //#endregion
 
 @Module({
@@ -458,6 +465,9 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		ApQuestionService,
 		QueueService,
 
+		XIntegrationService,
+		XCipherService,
+
 		//#region 文字列ベースでのinjection用(循環参照対応のため)
 		$LoggerService,
 		$AbuseReportService,
@@ -605,6 +615,9 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$ApNoteService,
 		$ApPersonService,
 		$ApQuestionService,
+
+		$XIntegrationService,
+		$XCipherService,
 		//#endregion
 	],
 	exports: [
@@ -756,6 +769,9 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		ApQuestionService,
 		QueueService,
 
+		XIntegrationService,
+		XCipherService,
+
 		//#region 文字列ベースでのinjection用(循環参照対応のため)
 		$LoggerService,
 		$AbuseReportService,
@@ -901,6 +917,9 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$ApNoteService,
 		$ApPersonService,
 		$ApQuestionService,
+
+		$XIntegrationService,
+		$XCipherService,
 		//#endregion
 	],
 })

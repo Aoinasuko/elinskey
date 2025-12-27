@@ -384,6 +384,9 @@ importers:
       tsc-alias:
         specifier: 1.8.16
         version: 1.8.16
+      twitter-api-v2:
+        specifier: 1.28.0
+        version: 1.28.0
       typeorm:
         specifier: 0.3.28
         version: 0.3.28(ioredis@5.8.2)(pg@8.16.3)
@@ -10562,6 +10565,9 @@ packages:
 
   tweetnacl@0.14.5:
     resolution: {integrity: sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==}
+
+  twitter-api-v2@1.28.0:
+    resolution: {integrity: sha512-VBmiAMylCEr94OChaHJ+0TBrOZNrduwWUe7QLoa/KdOdv1fNiToJ0xZGOrNKFd2B7jrAdAkfUW6yA5LuXYOYLQ==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -22509,6 +22515,8 @@ snapshots:
       safe-buffer: 5.2.1
 
   tweetnacl@0.14.5: {}
+
+  twitter-api-v2@1.28.0: {}
 
   type-check@0.4.0:
     dependencies:
