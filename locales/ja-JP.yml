@@ -2050,6 +2050,10 @@ _achievements:
       title: "ダブル🤯"
       description: "バブルゲームで最も大きいモノを2つ同時に出した"
       flavor: "これくらいの　おべんとばこに　🤯　🤯　ちょっとつめて"
+    _elinskeyAgecheck:
+      title: "年齢確認済み"
+      description: "18歳以上であることに同意した"
+      flavor: "あなたは18歳以上であることに同意しました"
 
 _role:
   new: "ロールの作成"
@@ -3528,3 +3532,7 @@ elinskey:
     disconnectFail: "解除に失敗しました"
     connectSuccess: "連携しました！ウィンドウを閉じます..."
     connectFail: "連携に失敗しました"
+  sensitivefilter:
+    sensitivecheckLabel: "年齢確認"
+    sensitivecheckDesc: "センシティブなメディアを表示しようとしています。センシティブなメディアには、18歳以上を対象としたコンテンツが含まれていることがあります。あなたは18歳以上ですか？"
+    sensitivecheckYes: "はい(18歳以上です)"

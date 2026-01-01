@@ -292,6 +292,10 @@ export class MiUser {
 	@Column('varchar', { length: 512, nullable: true })
 	public xAccessSecret: string | null;
 
+	// 18歳以上であることを確認するフラグ
+	@Column('boolean', { default: false, })
+    public isSensitiveContentAllowed: boolean;
+
 	constructor(data: Partial<MiUser>) {
 		if (data == null) return;
 

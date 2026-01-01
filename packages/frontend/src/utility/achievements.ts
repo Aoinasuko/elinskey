@@ -85,6 +85,7 @@ export const ACHIEVEMENT_TYPES = [
 	'tutorialCompleted',
 	'bubbleGameExplodingHead',
 	'bubbleGameDoubleExplodingHead',
+	'elinskeyAgecheck',
 ] as const;
 
 export const ACHIEVEMENT_BADGES = {
@@ -478,6 +479,11 @@ export const ACHIEVEMENT_BADGES = {
 		bg: 'linear-gradient(0deg, rgb(255 77 77), rgb(247 155 214))',
 		frame: 'silver',
 	},
+	'elinskeyAgecheck': {
+		img: '/fluent-emoji/1f51e.png',
+		bg: 'linear-gradient(0deg, rgb(247 100 150), rgb(247 155 214))',
+		frame: 'bronze',
+	}
 /* @see <https://github.com/misskey-dev/misskey/pull/10365#discussion_r1155511107>
 } as const satisfies Record<typeof ACHIEVEMENT_TYPES[number], {
 	img: string;

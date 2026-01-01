@@ -30,6 +30,7 @@ import { i18n } from '@/i18n.js';
 import * as os from '@/os.js';
 import MkMediaAudio from '@/components/MkMediaAudio.vue';
 import { prefer } from '@/preferences.js';
+import { ageCheck } from '@/utility/elinskey/ageCheck.js';
 
 const props = defineProps<{
 	media: Misskey.entities.DriveFile;
@@ -38,6 +39,13 @@ const props = defineProps<{
 const hide = ref(true);
 
 async function reveal() {
+
+	// 18歳以上である事の確認
+	const agecheck = await ageCheck(null, props.image.isSensitive);
+	if (!agecheck) {
+		return;
+	}
+
 	if (props.media.isSensitive && prefer.s.confirmWhenRevealingSensitiveMedia) {
 		const { canceled } = await os.confirm({
 			type: 'question',

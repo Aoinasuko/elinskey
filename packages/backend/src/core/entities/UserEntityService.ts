@@ -650,6 +650,7 @@ export class UserEntityService implements OnModuleInit {
 				withReplies: relation.following?.withReplies ?? false,
 				followedMessage: relation.isFollowing ? profile!.followedMessage : undefined,
 			} : {}),
+			isSensitiveContentAllowed: user.isSensitiveContentAllowed,
 		} as Promiseable<Packed<S>>;
 
 		return await awaitAll(packed);

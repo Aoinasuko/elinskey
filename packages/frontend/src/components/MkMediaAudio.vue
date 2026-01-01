@@ -100,6 +100,7 @@ import { hms } from '@/filters/hms.js';
 import MkMediaRange from '@/components/MkMediaRange.vue';
 import { $i, iAmModerator } from '@/i.js';
 import { prefer } from '@/preferences.js';
+import { ageCheck } from '@/utility/elinskey/ageCheck.js';
 
 const props = defineProps<{
 	audio: Misskey.entities.DriveFile;
@@ -158,6 +159,13 @@ const audioEl = useTemplateRef('audioEl');
 const hide = ref((prefer.s.nsfw === 'force' || prefer.s.dataSaver.media) ? true : (props.audio.isSensitive && prefer.s.nsfw !== 'ignore'));
 
 async function reveal() {
+
+	// 18歳以上である事の確認
+	const agecheck = await ageCheck(null, props.image.isSensitive);
+	if (!agecheck) {
+		return;
+	}
+
 	if (props.audio.isSensitive && prefer.s.confirmWhenRevealingSensitiveMedia) {
 		const { canceled } = await os.confirm({
 			type: 'question',

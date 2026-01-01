@@ -375,4 +375,5 @@ export const ACHIEVEMENT_TYPES = [
 	'tutorialCompleted',
 	'bubbleGameExplodingHead',
 	'bubbleGameDoubleExplodingHead',
+	'elinskeyAgecheck',
 ] as const;

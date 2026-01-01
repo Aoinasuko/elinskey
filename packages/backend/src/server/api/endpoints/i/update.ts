@@ -229,6 +229,8 @@ export const paramDef = {
 			uniqueItems: true,
 			items: { type: 'string' },
 		},
+		// センシティブなコンテンツを表示する
+		isSensitiveContentAllowed: { type: 'boolean' },
 	},
 } as const;
 
@@ -472,6 +474,12 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				}
 
 				updates.alsoKnownAs = newAlsoKnownAs.size > 0 ? Array.from(newAlsoKnownAs) : null;
+			}
+
+			// センシティブなコンテンツを表示するようにする
+			if (ps.isSensitiveContentAllowed !== undefined) {
+				user.isSensitiveContentAllowed = ps.isSensitiveContentAllowed;
+				updates.isSensitiveContentAllowed = user.isSensitiveContentAllowed;
 			}
 
 			//#region emojis/tags

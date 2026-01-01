@@ -77,6 +77,7 @@ import { i18n } from '@/i18n.js';
 import * as os from '@/os.js';
 import { $i, iAmModerator } from '@/i.js';
 import { prefer } from '@/preferences.js';
+import { ageCheck } from '@/utility/elinskey/ageCheck.js';
 
 const props = withDefaults(defineProps<{
 	image: Misskey.entities.DriveFile;
@@ -101,6 +102,12 @@ const url = computed(() => (props.raw || prefer.s.loadRawImages)
 
 async function reveal(ev: MouseEvent) {
 	if (!props.controls) {
+		return;
+	}
+
+	// 18歳以上である事の確認
+	const agecheck = await ageCheck(ev, props.image.isSensitive);
+	if (!agecheck) {
 		return;
 	}
 

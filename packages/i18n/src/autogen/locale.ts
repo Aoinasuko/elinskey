@@ -7897,6 +7897,20 @@ export interface Locale extends ILocale {
                  */
                 "flavor": string;
             };
+            "_elinskeyAgecheck": {
+                /**
+                 * 年齢確認済み
+                 */
+                "title": string;
+                /**
+                 * 18歳以上であることに同意した
+                 */
+                "description": string;
+                /**
+                 * あなたは18歳以上であることに同意しました
+                 */
+                "flavor": string;
+            };
         };
     };
     "_role": {
@@ -13178,6 +13192,20 @@ export interface Locale extends ILocale {
              * 連携に失敗しました
              */
             "connectFail": string;
+        };
+        "sensitivefilter": {
+            /**
+             * 年齢確認
+             */
+            "sensitivecheckLabel": string;
+            /**
+             * センシティブなメディアを表示しようとしています。センシティブなメディアには、18歳以上を対象としたコンテンツが含まれていることがあります。あなたは18歳以上ですか？
+             */
+            "sensitivecheckDesc": string;
+            /**
+             * はい(18歳以上です)
+             */
+            "sensitivecheckYes": string;
         };
     };
 }

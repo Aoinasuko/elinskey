@@ -40,6 +40,7 @@ import XVideo from '@/components/MkMediaVideo.vue';
 import * as os from '@/os.js';
 import { focusParent } from '@/utility/focus.js';
 import { prefer } from '@/preferences.js';
+import { isAgeChecked } from '@/utility/elinskey/ageCheck.js';
 
 const props = defineProps<{
 	mediaList: Misskey.entities.DriveFile[];
@@ -53,6 +54,11 @@ const count = computed(() => props.mediaList.filter(media => previewable(media))
 let lightbox: PhotoSwipeLightbox | null = null;
 
 let activeEl: HTMLElement | null = null;
+
+// 18歳以上か確認が取れていないならセンシティブのギャラリー表示をブロック
+function isBlocked(media: Misskey.entities.DriveFile): boolean {
+	return media.isSensitive && !isAgeChecked();
+}
 
 const popstateHandler = (): void => {
 	if (lightbox?.pswp && lightbox.pswp.isOpen === true) {
@@ -147,6 +153,15 @@ onMounted(() => {
 		const id = element?.dataset.id;
 		const file = props.mediaList.find(media => media.id === id);
 		if (!file) return itemData;
+
+		// センシティブコンテンツの表示が許可されていないなら代替画像を出す
+		if (isBlocked(file)) {
+			return {
+				src: 'https://elinskey.com/Item/IsSensitive.png',
+				width: 640,
+				height: 640
+			};
+		}
 
 		itemData.src = file.url;
 		itemData.w = Number(file.properties.width);
